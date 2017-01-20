@@ -1,0 +1,69 @@
+﻿<Controls:MetroWindow x:Class="kursMMHTP.MainWindow"
+                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                      xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                      xmlns:Dialogs="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                      xmlns:oxy="http://oxyplot.org/wpf"
+                      Title="kursMMHTP"
+                      GlowBrush="{DynamicResource AccentColorBrush}"
+                      BorderThickness="1"
+                      Height="600"
+                      MinHeight="600"
+                      Width="1000"
+                      MinWidth="1000"
+                      WindowStartupLocation="CenterScreen"
+                      WindowTransitionsEnabled ="False">
+
+    <!-- your content -->
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <GroupBox Grid.Column="0" Header="Входные параметры">
+        <StackPanel>
+            <Label Margin="4" Content="Начальный объем суспензии "></Label>
+                <Controls:NumericUpDown Name ="test" Margin = "4" Minimum="0.001" Maximum="2" Interval="0.1" Value="{Binding Vf}" StringFormat="{}{0:N3} м^3"/>
+            <Label Margin="4" Content="Объемная доля твердой фазы в суспензии "></Label>
+                <Controls:NumericUpDown Margin = "4" Minimum="0.001" Maximum="1" Interval="0.1" Value="{Binding x}" StringFormat="{}{0:N3}"/>
+            <Label Margin="4" Content="Вязкость жидкой среды суспензии "></Label>
+                <Controls:NumericUpDown Margin = "4" Minimum="0.001" Maximum="0.009" Interval="0.001" Value="{Binding Mu}" StringFormat="{}{0:N3} м∙с/м^2"/>
+            <Label Margin="4" Content="Площадь поверхности фильтрования "></Label>
+                <Controls:NumericUpDown Margin = "4" Minimum="0.001" Maximum="2" Interval="0.1" Value="{Binding S}" StringFormat="{}{0:N3} м^2"/>
+            <Label Margin="4" Content="Поддерживаемая разность давлений "></Label>
+                <Controls:NumericUpDown Margin = "4" Minimum="400" Maximum="1000" Interval="10" Value="{Binding dP}" StringFormat="{}{0:N0} кПа"/>
+            <Label Margin="4" Content="Удельное объемное сопротивление осадка "></Label>
+                <Controls:NumericUpDown Margin = "4" Minimum="0.001" Maximum="1" Interval="0.01" Value="{Binding r0}" StringFormat="{}{0:N3} *10^12 1/м^2"/>
+            <Label Margin="4" Content="Сопротивление фильтровальной перегородки "></Label>
+                <Controls:NumericUpDown Margin = "4" Minimum="0.001" Maximum="1" Interval="0.01" Value="{Binding Rfp}" StringFormat="{}{0:N3} *10^10 1/м"/>
+                <Button Margin = "4" Content="Начать рассчет" Command="{Binding ClickCalculateCommand}"/>
+        </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Column="1" Header="Рассчитанные значения">
+        <StackPanel>
+            <Label Margin="4" Content="Конечный объем в фильтре "></Label>
+                <Controls:NumericUpDown Margin = "4" Value="{Binding Vfout}" StringFormat="{}{0:N3} м^3" HideUpDownButtons="True" IsReadOnly="True"/>
+            <Label Margin="4" Content="Объем фильтрата в сборнике  "></Label>
+                <Controls:NumericUpDown Margin = "4" Value="{Binding Vc}" StringFormat="{}{0:N3} м^3" HideUpDownButtons="True" IsReadOnly="True"/>
+            <Label Margin="4" Content="Высота слоя осадка "></Label>
+                <Controls:NumericUpDown Margin = "4" Value="{Binding hoc}" StringFormat="{}{0:N3} см" HideUpDownButtons="True" IsReadOnly="True"/>
+            <Label Margin="4" Content="Время фильтрования  "></Label>
+                <Controls:NumericUpDown Margin = "4" Value="{Binding t}" StringFormat="{}{0:N1} мин" HideUpDownButtons="True" IsReadOnly="True"/>
+            </StackPanel>
+        </GroupBox>
+
+        <GroupBox Grid.Column="2" Header="Граффики зависимостей">                
+            <oxy:Plot>
+                <oxy:Plot.Series>
+                    <oxy:LineSeries Title="Обьем суспензии в фильтре [м^3]" ItemsSource="{Binding PointsVf}"></oxy:LineSeries>
+                    <oxy:LineSeries Title="Обьем фильтрата в сборнике [м^3]" ItemsSource="{Binding PointsVc}"></oxy:LineSeries>
+                    <oxy:LineSeries Title="Высота слоя осадка [cм]" ItemsSource="{Binding PointsHoc}"></oxy:LineSeries>
+                </oxy:Plot.Series>              
+            </oxy:Plot>
+        </GroupBox>
+
+    </Grid>
+</Controls:MetroWindow>

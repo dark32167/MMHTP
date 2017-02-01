@@ -53,163 +53,179 @@ namespace kursMMHTP.ViewModel
         }
         #endregion
 
+        //названия переменных взяты из физических формул.
         #region data from user
         //объём суспензии в фильтре
+        private Double _Vf;
         public Double Vf
         {
-            get { return (Double)GetValue(VfProperty); }
-            set { SetValue(VfProperty, value); }
+            get { return _Vf; }
+            set
+            {
+                _Vf = value;
+                RaisePropertyChanged("Vf");
+            }
         }
 
         //объемная доля твердой фазы в суспензии (от 0 до 1)
+        private Double _x;
         public Double x
         {
-            get { return (Double)GetValue(xProperty); }
-            set { SetValue(xProperty, value); }
+            get { return _x; }
+            set
+            {
+                _x = value;
+                RaisePropertyChanged("x");
+            }
         }
 
         //вязкость жидкой фазы суспензии, н•сек• м-2;
+        private Double _Mu;
         public Double Mu
         {
-            get { return (Double)GetValue(MuProperty); }
-            set { SetValue(MuProperty, value); }
+            get { return _Mu; }
+            set
+            {
+                _Mu = value;
+                RaisePropertyChanged("Mu");
+            }
         }
 
         //поверхность фильтрования, м2;
+        private Double _S;
         public Double S
         {
-            get { return (Double)GetValue(SProperty); }
-            set { SetValue(SProperty, value); }
+            get { return _S; }
+            set
+            {
+                _S = value;
+                RaisePropertyChanged("S");
+            }
         }
         //разность давлений, н• м-2;
+        private int _dP;
         public int dP
         {
-            get { return (int)GetValue(dPProperty); }
-            set { SetValue(dPProperty, value); }
+            get { return _dP; }
+            set
+            {
+                _dP = value;
+                RaisePropertyChanged("dP");
+            }
         }
         //удельное объёмное сопротивление осадка (сопротивление, оказываемое потоку фильтрата равномерным слоем осадка толщиной 1 м), м-2.
+         private Double _r0;
         public Double r0
         {
-            get { return (Double)GetValue(r0Property); }
-            set { SetValue(r0Property, value); }
+            get { return _r0; }
+            set
+            {
+                _r0 = value;
+                RaisePropertyChanged("r0");
+            }
         }
         //сопротивление фильтровальной перегородки, м-1
+        private Double _Rfp;
         public Double Rfp
         {
-            get { return (Double)GetValue(RfpProperty); }
-            set { SetValue(RfpProperty, value); }
+            get { return _Rfp; }
+            set
+            {
+                _Rfp = value;
+                RaisePropertyChanged("Rfp");
+            }
         }
         #endregion
 
         #region Data after calc
-        //названия переменных взяты из физических формул.
+        
         //объём фильтрата в сборнике
+        private Double _Vc;
         public Double Vc
         {
-            get { return (Double)GetValue(VcProperty); }
-            set { SetValue(VcProperty, value); }
+            get { return _Vc; }
+            set
+            {
+                _Vc = value;
+                RaisePropertyChanged("Vc");
+            }
         }
         //высоту слоя осадка (см)
+        private Double _hoc;
         public Double hoc
         {
-            get { return (Double)GetValue(hocProperty); }
-            set { SetValue(hocProperty, value); }
+            get { return _hoc; }
+            set
+            {
+                _hoc = value;
+                RaisePropertyChanged("hoc");
+            }
         }
         //время фильтрования
+        private Double _t;
         public Double t
         {
-            get { return (Double)GetValue(tProperty); }
-            set { SetValue(tProperty, value); }
+            get { return _t; }
+            set
+            {
+                _t = value;
+                RaisePropertyChanged("t");
+            }
         }
         //точки для граффика зависимости Vf от t
+        private List<DataPoint> _pointsVf;
         public List<DataPoint> PointsVf
         {
-            get { return (List<DataPoint>)GetValue(PointsVfProperty); }
-            set { SetValue(PointsVfProperty, value); }
+            get { return _pointsVf; }
+            set
+            {
+                _pointsVf = value;
+                RaisePropertyChanged("PointsVf");
+            }
         }
         //точки для граффика зависимости Vc от t
+        private List<DataPoint> _pointsVc;
         public List<DataPoint> PointsVc
         {
-            get { return (List<DataPoint>)GetValue(PointsVcProperty); }
-            set { SetValue(PointsVcProperty, value); }
+            get { return _pointsVc; }
+            set
+            {
+                _pointsVc = value;
+                RaisePropertyChanged("PointsVc");
+            }
         }
         //точки для граффика зависимости hoc от t
+        private List<DataPoint> _pointsHoc;
         public List<DataPoint> PointsHoc
         {
-            get { return (List<DataPoint>)GetValue(PointsHocProperty); }
-            set { SetValue(PointsHocProperty, value); }
+            get { return _pointsHoc; }
+            set
+            {
+                _pointsHoc = value;
+                RaisePropertyChanged("PointsHoc");
+            }
         }
         //объем слоя осадка в фильтре
+        private Double _Vfout;
         public Double Vfout
         {
-            get { return (Double)GetValue(VfoutProperty); }
-            set { SetValue(VfoutProperty, value); }
+            get { return _Vfout; }
+            set {
+                _Vfout = value;
+                RaisePropertyChanged("Vfout");
+            }
         }
 
         #endregion
 
-        #region propdp
-
-        // Using a DependencyProperty as the backing store for Vf.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty VfoutProperty =
-            DependencyProperty.Register("Vfout", typeof(Double), typeof(MainWindowModel));
-
-        // Using a DependencyProperty as the backing store for PointsVf.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PointsHocProperty =
-            DependencyProperty.Register("PointsHoc", typeof(List<DataPoint>), typeof(MainWindowModel));
-
-
-        // Using a DependencyProperty as the backing store for PointsVf.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PointsVcProperty =
-            DependencyProperty.Register("PointsVc", typeof(List<DataPoint>), typeof(MainWindowModel));
-
-
-        // Using a DependencyProperty as the backing store for PointsVf.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty PointsVfProperty =
-            DependencyProperty.Register("PointsVf", typeof(List<DataPoint>), typeof(MainWindowModel));
-
-        // Using a DependencyProperty as the backing store for t.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty tProperty =
-            DependencyProperty.Register("t", typeof(Double), typeof(MainWindowModel));
-
-        // Using a DependencyProperty as the backing store for hoc.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty hocProperty =
-            DependencyProperty.Register("hoc", typeof(Double), typeof(MainWindowModel));
-
-        // Using a DependencyProperty as the backing store for Vc.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty VcProperty =
-            DependencyProperty.Register("Vc", typeof(Double), typeof(MainWindowModel));
-
-        // Using a DependencyProperty as the backing store for Rfp.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty RfpProperty =
-            DependencyProperty.Register("Rfp", typeof(Double), typeof(MainWindowModel));
-
-        // Using a DependencyProperty as the backing store for r0.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty r0Property =
-            DependencyProperty.Register("r0", typeof(Double), typeof(MainWindowModel));
-
-        // Using a DependencyProperty as the backing store for dP.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty dPProperty =
-            DependencyProperty.Register("dP", typeof(int), typeof(MainWindowModel));
-
-        // Using a DependencyProperty as the backing store for S.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty SProperty =
-            DependencyProperty.Register("S", typeof(Double), typeof(MainWindowModel));
-
-        // Using a DependencyProperty as the backing store for Mu.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty MuProperty =
-            DependencyProperty.Register("Mu", typeof(Double), typeof(MainWindowModel));
-
-        // Using a DependencyProperty as the backing store for x.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty xProperty =
-            DependencyProperty.Register("x", typeof(Double), typeof(MainWindowModel));
-
-        // Using a DependencyProperty as the backing store for Vf.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty VfProperty =
-            DependencyProperty.Register("Vf", typeof(Double), typeof(MainWindowModel));
-
-        #endregion          
-    
         public event PropertyChangedEventHandler PropertyChanged;
+        public void RaisePropertyChanged(string propertyName)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
     }
 }

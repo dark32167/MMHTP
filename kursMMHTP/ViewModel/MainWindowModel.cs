@@ -2,6 +2,7 @@
 using OxyPlot;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using System.Windows.Input;
 
 namespace kursMMHTP.ViewModel
 {
-    class MainWindowModel : DependencyObject
+    class MainWindowModel : INotifyPropertyChanged
     {
         #region singletone
         private static MainWindowModel instance;
@@ -101,6 +102,7 @@ namespace kursMMHTP.ViewModel
         #endregion
 
         #region Data after calc
+        //названия переменных взяты из физических формул.
         //объём фильтрата в сборнике
         public Double Vc
         {
@@ -206,9 +208,8 @@ namespace kursMMHTP.ViewModel
         public static readonly DependencyProperty VfProperty =
             DependencyProperty.Register("Vf", typeof(Double), typeof(MainWindowModel));
 
-        #endregion 
- 
-
-         
+        #endregion          
+    
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

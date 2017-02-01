@@ -12,6 +12,7 @@ namespace kursMMHTP.Model
         #region var
         ViewModel.MainWindowModel MainViewModel = ViewModel.MainWindowModel.getInsance();
 
+        // названия переменных взяты из физических формул их изменение было бы не рентабельным.
         //объём суспензии в фильтре
         private double Vf;
         //поверхность фильтрования, м2;
@@ -56,6 +57,7 @@ namespace kursMMHTP.Model
             Calculation();
         }
 
+        //основные вычисления
         private void Calculation()
         {
 
@@ -87,31 +89,37 @@ namespace kursMMHTP.Model
 
         }
 
+        //рассчет объема осадка
         private Double CalcVc()
         {
             return Gout * S * t;
         }
 
+        //рассчет объема фильтрата
         private Double CalcVf()
         {
             return hoc * S;
         }
 
+        //рассчет температуры
         private Double CalcT()
         {
             return Vf / (S * Gout);
         }
 
+        //рассчет высоты осадка
         private Double HocCalc()
         {
             return (x * Vf) / S;
         }
 
+        //рассчет сопротивление слоя осадка
         private Double RocCalc()
         {
             return r0 * hoc;
         }
 
+        //рассчет расхода суспензии
         private Double CalcGout()
         {
             return dP / (mu * (Rfp + Roc));

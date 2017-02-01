@@ -218,6 +218,7 @@ namespace kursMMHTP.ViewModel
 
         #endregion
 
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void RaisePropertyChanged(string propertyName)
         {

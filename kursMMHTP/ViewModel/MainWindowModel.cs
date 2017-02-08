@@ -1,4 +1,5 @@
 ﻿using kursMMHTP.Helpers;
+using kursMMHTP.Model;
 using OxyPlot;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,8 @@ namespace kursMMHTP.ViewModel
 {
     class MainWindowModel : INotifyPropertyChanged
     {
-        #region singletone
-        private static MainWindowModel instance;
 
-        private MainWindowModel()
+        public MainWindowModel()
         {
             Vf = 0.001;
             x = 0.001;
@@ -26,16 +25,6 @@ namespace kursMMHTP.ViewModel
             r0 = 0.001;
             Rfp = 0.001;
         }
-
-        public static MainWindowModel getInsance()
-        {
-            if (instance == null)
-            {
-                instance = new MainWindowModel();
-            }
-            return instance;
-        }
-        #endregion
 
         #region ClickCalculate
         private ICommand _clickCalculateCommand;
@@ -49,7 +38,14 @@ namespace kursMMHTP.ViewModel
 
         public void ClickCalculateAction()
         {
-            new kursMMHTP.Model.MathModel();
+           MathModel Calculation = new MathModel(Vf,S,x,dP,Mu,Rfp,r0);
+           Vc = Calculation.Vc;
+           hoc = Calculation.hoc;
+           t = Calculation.t;
+           PointsVc = Calculation.PointsVc;
+           PointsVf = Calculation.PointsVf;
+           PointsHoc = Calculation.PointsHoc;
+           Vfout = Calculation.Vfout;
         }
         #endregion
 
@@ -220,7 +216,7 @@ namespace kursMMHTP.ViewModel
 
 
         public event PropertyChangedEventHandler PropertyChanged;
-        public void RaisePropertyChanged(string propertyName)
+        private void RaisePropertyChanged(string propertyName)
         {
             var handler = PropertyChanged;
             if (handler != null)

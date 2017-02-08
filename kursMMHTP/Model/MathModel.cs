@@ -10,50 +10,52 @@ namespace kursMMHTP.Model
     class MathModel
     {
         #region var
-        ViewModel.MainWindowModel MainViewModel = ViewModel.MainWindowModel.getInsance();
-
-        // названия переменных взяты из физических формул их изменение было бы не рентабельным.
-        //объём суспензии в фильтре
-        private double Vf;
-        //поверхность фильтрования, м2;
-        private double S;
-        //объемная доля твердой фазы в суспензии (от 0 до 1)
-        private double x;
-        //высоту слоя осадка (см)
-        private double hoc;
-        //разность давлений, н• м-2;
-        private double dP;
-        //вязкость жидкой фазы суспензии, н•сек• м-2;
-        private double mu;
-        //сопротивление фильтровальной перегородки, м-1
-        private double Rfp;
-        //сопротивление слоя осадка, м-1
-        private double Roc;
-        //удельное объёмное сопротивление осадка (сопротивление, оказываемое потоку фильтрата равномерным слоем осадка толщиной 1 м), м-2.
-        private double r0;
-        //объёмный расход суспензии через фильтрующую перегородку, м3/c; 
-        private double Gout;
-        //время фильтрования
-        private double t;
-        //объём фильтрата в сборнике
-        private double Vc;
-        //точки для граффика Vf
-        private List<DataPoint> PointsVf = new List<DataPoint>();
-        //точки для граффика Vf
-        private List<DataPoint> PointsVc = new List<DataPoint>();
-        //точки для граффика Vf
-        private List<DataPoint> PointsHoc = new List<DataPoint>();
+        /*
+         * названия переменных взяты из физических формул их изменение было бы не рентабельным.
+         * Vf - объём суспензии в фильтре
+         * S - поверхность фильтрования, м2;
+         * x - объемная доля твердой фазы в суспензии (от 0 до 1)
+         * hoc - высоту слоя осадка (см)
+         * dP - разность давлений, н• м-2;
+         * mu - вязкость жидкой фазы суспензии, н•сек• м-2;
+         * Rfp - сопротивление фильтровальной перегородки, м-1
+         * Roc - сопротивление слоя осадка, м-1
+         * r0 - удельное объёмное сопротивление осадка (сопротивление, оказываемое потоку фильтрата равномерным слоем осадка толщиной 1 м), м-2.
+         * Gout - объёмный расход суспензии через фильтрующую перегородку, м3/c; 
+         * t - время фильтрования
+         * Vc - объём фильтрата в сборнике
+         * PointsVf - точки для граффика Vf
+         * PointsVc - точки для граффика Vc
+         * PointsHoc - точки для граффика Hoc
+         * Vfout - объем суспензии(остатка) в фильтре после фильтрации
+         */
+        public double Vf;
+        public double S;
+        public double x;
+        public double hoc;
+        public double dP;
+        public double mu;
+        public double Rfp;
+        public double Roc;
+        public double r0;
+        public double Gout;
+        public double t;
+        public double Vc;
+        public List<DataPoint> PointsVf = new List<DataPoint>();
+        public List<DataPoint> PointsVc = new List<DataPoint>();
+        public List<DataPoint> PointsHoc = new List<DataPoint>();
+        public double Vfout;
         #endregion
 
-        public MathModel()
+        public MathModel(double Vf, double S, double x, double dP, double mu, double Rfp, double r0)
         {
-            Vf = MainViewModel.Vf;
-            S = MainViewModel.S;
-            x = MainViewModel.x;
-            dP = MainViewModel.dP;
-            mu = MainViewModel.Mu;
-            Rfp = MainViewModel.Rfp * 10000000000;
-            r0 = MainViewModel.r0 * 1000000000000;
+            this.Vf = Vf;
+            this.S = S;
+            this.x = x;
+            this.dP = dP;
+            this.mu = mu;
+            this.Rfp = Rfp * 10000000000;
+            this.r0 = r0 * 1000000000000;
             Calculation();
         }
 
@@ -67,8 +69,6 @@ namespace kursMMHTP.Model
             t = CalcT();
 
             Vc = CalcVc();
-            MainViewModel.Vc = Vc;
-            MainViewModel.t = t;
 
             //рассчет данных для графика
             for (double i = 0.1; i < t && i < 10000; i++)
@@ -81,14 +81,13 @@ namespace kursMMHTP.Model
                 PointsHoc.Add(new DataPoint(i, graphHoc));
             }
 
-            MainViewModel.PointsVf = PointsVf;
-            MainViewModel.PointsVc = PointsVc;
-            MainViewModel.PointsHoc = PointsHoc;
-            MainViewModel.hoc = hoc * 100;
-            MainViewModel.Vfout= CalcVf();
+            //перевод высоты остатка в метрическую систему
+            hoc = hoc * 100;
+
+            Vfout = CalcVf();
 
         }
-
+        
         //рассчет объема осадка
         private Double CalcVc()
         {

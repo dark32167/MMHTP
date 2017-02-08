@@ -30,7 +30,7 @@ namespace kursMMHTP
 
         void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            DataContext = ViewModel.MainWindowModel.getInsance();
+            DataContext = new ViewModel.MainWindowModel();
         }
     }
 }
